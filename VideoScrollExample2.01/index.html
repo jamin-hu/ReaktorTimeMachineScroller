@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="main.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <!--<script src="/sticky.js"></script>-->
+</head>
+
+
+<div class="container">
+    <div class="background-images">
+    </div>
+</div>
+
+<script type="text/javascript">
+
+$(function () {
+    var $container = $(".container");
+    var container = $container.get(0)
+    var $bgImage = $(".test");
+    var bgImage = $bgImage.get(0);
+
+    $container.scroll(function (event) {
+        var position = $container.scrollTop();
+        setBgImage(position);
+    });
+
+    // preload the given total amount of iamges
+    function preload(totalImages) {
+        function fetch(url) {
+          var image = new Image();
+          image.src = url;
+        }
+
+        for (var i = 0; i < totalImages; i++) {
+            fetch(getImgUrl(i));
+        }
+    }
+
+    preload(36);
+
+    function setBgImage(position) {
+        var imageNum;
+        var lineCount = 0;
+
+        imageNum = parseInt(position / 100);
+        var filePath = getFilePath(imageNum)
+        var url = getImgUrl(imageNum);
+
+        container.style.backgroundImage = "url('"+ filePath +"')";
+    }
+
+    function getFilePath(num) {
+        return "imgs/futureMonth" + (13+num) + ".png"
+
+    }
+
+    function getImgUrl(num) {
+        return "http://placehold.it/200x200/&text=" + num;
+    }
+})
+
+</script>
+</html>
